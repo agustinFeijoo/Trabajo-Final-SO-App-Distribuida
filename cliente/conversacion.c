@@ -27,6 +27,16 @@ char *modoEnvio(int newSockFd, char *buffer)
                     error("Error en write()");
                 break;
             }
+            else if(strcmp(buffer, "C\n") == 0){
+                char aux[SIZE_OF_BUFFER];
+                printf("Modo modificacion de archivo. Apretar enter para continuar. \n");
+                fgets(buffer, SIZE_OF_BUFFER, stdin);
+                modificarArchivo();
+                printf("Archivo modificado. \n");
+                if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0)
+                    error("Error en write()");
+                break;
+            }  
             else
             {
                 if (strcmp(buffer, "F\n") == 0){
@@ -40,6 +50,34 @@ char *modoEnvio(int newSockFd, char *buffer)
         //else vuelve a presionar el comando porque le erro
     }
     return buffer;
+}
+
+void modificarArchivo(){
+    int num;
+   FILE *fptr;
+
+   if ((fptr = fopen("DocumentoCompartido.txt","r")) == NULL){
+       printf("Error! opening file");
+
+       // Program exits if the file pointer returns NULL.
+       exit(1);
+   }
+
+   fscanf(fptr,"%d", &num);
+
+   fclose(fptr);
+
+   fptr = fopen("DocumentoCompartido.txt","w");
+
+   if(fptr == NULL)
+   {
+      printf("Error!");
+      exit(1);
+   }
+    num = num + 1;
+
+   fprintf(fptr,"%d",num);
+   fclose(fptr);
 }
 
 char *modoRecibir(int newSockFd, char *buffer)

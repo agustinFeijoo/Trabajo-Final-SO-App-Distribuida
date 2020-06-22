@@ -18,7 +18,7 @@ int main()
 {
     int sockfd, newSockFd, port;
     int words, nWords;
-
+    int i = 0;
     socklen_t addrlen;
     struct sockaddr_in serv_addr, client_addr;
     //AF_INET voy a usar los protocolos ARPA de internet
@@ -60,7 +60,7 @@ int main()
         if(strncmp(buffer, "F\n",1) == 0)
             break;
         //Modo recibir también hace la llamada a recibirArchivo(...)
-        printf("\n Server (ingrese el modo 'T','F' o 'M'):");
+        printf("\n Server (ingrese el modo 'T','F','M','C'):");
         strcpy(buffer,modoEnvio(newSockFd,buffer));
         //Modo envio también hace la llamada a transferirArchivo(...)
     }

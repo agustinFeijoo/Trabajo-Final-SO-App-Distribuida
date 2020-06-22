@@ -43,13 +43,11 @@ int main()
     fgets(buffer,SIZE_OF_BUFFER,stdin);//limpio el buffer
     while (strncmp(buffer, "F\n",1) != 0)
     {
-        
-        printf("\n Cliente (ingrese el modo 'T','F' o 'M'):");
+        printf("\n Cliente (ingrese el modo 'T','F','M','C'):");
         //Modo envio también hace la llamada a transferirArchivo(...)
         strcpy(buffer,modoEnvio(sockfd,buffer));
         if(strncmp(buffer, "F\n",1) == 0)
             break;
-
 
         printf("\nServer:");
         printf("%s",modoRecibir(sockfd,buffer));
