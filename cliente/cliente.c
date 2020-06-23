@@ -19,7 +19,7 @@ int main()
     int sockfd, port, nPalabras = 0, cMensajeFichero = 1, nCaracteresFichero = 0, words = 0;
     char  c, fichero[100], ch,host[100];
     socklen_t addrlen;
-
+    bool modificandoArchivo=false;
     struct hostent *he;
     struct sockaddr_in serv_addr;
     FILE *f;
@@ -52,6 +52,11 @@ int main()
         printf("\nServer:");
         printf("%s",modoRecibir(sockfd,buffer));
         //Modo recibir también hace la llamada a recibirArchivo(...)
+        if(strncmp(buffer, "C\n",1) == 0){
+            modificandoArchivo=true;
+            printf("archivo Modificandoseeeeeeeeeeeeeeeeeeee");
+        }
+            
     }
     close(sockfd);
 }
