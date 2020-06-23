@@ -28,9 +28,13 @@ char *modoEnvio(int newSockFd, char *buffer)
                 break;
             }
             else if(strcmp(buffer, "C\n") == 0){
+                if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0){
+                      error("Error en write()");
+                }
                 char aux[SIZE_OF_BUFFER];
                 printf("Modo modificacion de archivo. Apretar enter para continuar. \n");
                 fgets(buffer, SIZE_OF_BUFFER, stdin);
+                
                 modificarArchivo();
                 printf("Archivo modificado. \n");
                 if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0)
@@ -44,7 +48,7 @@ char *modoEnvio(int newSockFd, char *buffer)
                     break;
                 }
                 else
-                    printf("Lo sentimos,tu comando fue errado..Ingrese nuevamente 'T','M' o 'F'");
+                    printf("Lo sentimos,tu comando fue errado..Ingrese nuevamente 'T','M' , 'F' o 'C'");
             }
         }
         //else vuelve a presionar el comando porque le erro
