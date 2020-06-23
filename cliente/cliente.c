@@ -53,7 +53,7 @@ int main()
         printf("%s",modoRecibir(sockfd,buffer));
         //Modo recibir también hace la llamada a recibirArchivo(...)
         if(strncmp(buffer, "C\n",1) == 0){
-            int modificandoArchivo=1;
+             modificandoArchivo=1;
             
         }
             
