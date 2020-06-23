@@ -1,6 +1,6 @@
 #include "conversacion.h"
 
-char *modoEnvio(int newSockFd, char *buffer)
+char *modoEnvio(int newSockFd, char *buffer,int modificandose)
 {
     while (1)
     {
@@ -28,7 +28,8 @@ char *modoEnvio(int newSockFd, char *buffer)
                 break;
             }
             else if(strcmp(buffer, "C\n") == 0){
-                 if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0){
+                if(!modificandoArchivo){
+                if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0){//envio que estoy modificando el archivo
                       error("Error en write()");
                 }
                 char aux[SIZE_OF_BUFFER];
@@ -36,9 +37,22 @@ char *modoEnvio(int newSockFd, char *buffer)
                 fgets(buffer, SIZE_OF_BUFFER, stdin);
                 modificarArchivo();
                 printf("Archivo modificado. \n");
-                if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0)
+                if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0)//envio que termine de modificar el archivo
                     error("Error en write()");
                 break;
+                }else{
+                    printf("El archivo se esta/estuvo modificando \n");
+                    read(newSockFd, buffer, SIZE_OF_BUFFER) < 0 //se termino de modificar? si envio 2 veces C quiere decir que si
+                    if(strcmp(buffer, "C\n") == 0){
+                            char aux[SIZE_OF_BUFFER];
+                        fgets(buffer, SIZE_OF_BUFFER, stdin);
+                        modificarArchivo();
+                        printf("Archivo modificado. \n");
+                    if (write(newSockFd, buffer, SIZE_OF_BUFFER) < 0)//envio que termine de modificar el archivo
+                        error("Error en write()");
+                    break;
+                    }
+                  }
             }  
             else
             {

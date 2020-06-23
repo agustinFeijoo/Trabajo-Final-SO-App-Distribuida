@@ -12,9 +12,10 @@
 #define  SIZE_OF_BUFFER 255
 
 
+void modificarArchivo();
 void error(const char *error);
 void newlineRemover(char *array);
-char* modoEnvio(int,char*);
+char* modoEnvio(int,char*,int);
 char* modoRecibir(int,char*);
 int transferirArchivo(int);
 int recibirArchivo(int);
